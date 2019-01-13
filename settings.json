@@ -1,0 +1,12 @@
+{
+  "validations": {
+    "maxDuration": 10,
+    "maxYearsPast": 10
+  },
+  "locations": {
+    "losangeles": {
+      "latitude": 34,
+      "longitude": -118
+    }
+  }
+}
