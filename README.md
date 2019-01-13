@@ -1,5 +1,5 @@
-# A Pig - The API Grapher
-**A Pig** is a web app that allows graphing data comparisons from a selection of publicly available data APIs.
+# API Grapher
+**API Grapher** is a web app that allows graphing data comparisons from a selection of publicly available data APIs.
 
 ## Features
 * Mix and match from a selection of different data API and graph settings to investigate data from multiple of angles.
