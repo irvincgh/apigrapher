@@ -1,6 +1,10 @@
 {
   "name": "grapher",
   "version": "0.0.1",
+  "engines": {
+    "node": "11.3.0",
+    "npm": "6.5.0"
+  },
   "main": "api/app.js",
   "babel": {
     "plugins": [
