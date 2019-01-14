@@ -20,7 +20,8 @@
   "scripts": {
     "build": "node ./node_modules/webpack/bin/webpack.js",
     "build-n-watch": "node ./node_modules/webpack/bin/webpack.js -w",
-    "start": "npm run build; node api/app.js"
+    "start": "npm run build; node api/app.js",
+    "test": "mocha"
   },
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
@@ -48,7 +49,9 @@
     "@babel/preset-env": "^7.1.5",
     "@babel/preset-react": "^7.0.0",
     "babel-loader": "^8.0.4",
+    "chai": "^4.2.0",
     "extract-text-webpack-plugin": "^3.0.2",
+    "mocha": "^5.2.0",
     "webpack": "^4.25.1",
     "webpack-cli": "^3.1.2"
   }

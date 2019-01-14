@@ -1,7 +1,7 @@
 {
   "validations": {
     "maxDuration": 10,
-    "maxYearsPast": 10
+    "maxYearsPast": 25
   },
   "locations": {
     "losangeles": {

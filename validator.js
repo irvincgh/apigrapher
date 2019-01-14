@@ -4,8 +4,8 @@ const moment = require('moment');
 class Validator {
   constructor(params) {
     this.params = params
-    this.startDate = moment(params.start)
-    this.endDate = moment(params.end)
+    if (this.params) this.startDate = moment(params.start)
+    if (this.params) this.endDate = moment(params.end)
     this.errors = {}
   }
 
@@ -18,6 +18,7 @@ class Validator {
   }
 
   validate() {
+    this.errors = {}
     this.validateDates()
     return !this.hasErrors()
   }
@@ -32,13 +33,13 @@ class Validator {
     let parsableStart = true;
     let parsableEnd = true;
 
-    if (!this.startDate.isValid()) {
+    if (!this.startDate || !this.startDate.isValid()) {
       parsableStart = false
-      dateErrors.start.push('Graph data contains improperly formatted start date.')
+      dateErrors.start.push('Graph data must include properly formatted start date.')
     }
-    if (!this.endDate.isValid()) {
+    if (!this.endDate || !this.endDate.isValid()) {
       parsableEnd = false
-      dateErrors.end.push('Graph data contains improperly formatted end date.')
+      dateErrors.end.push('Graph data must include properly formatted end date.')
     }
     if (parsableStart) {
       if (this.startDate < minimumDate) {
