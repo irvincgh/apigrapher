@@ -3,9 +3,8 @@ const moment = require('moment');
 
 class Validator {
   constructor(params) {
-    this.params = params
-    if (this.params) this.startDate = moment(params.start)
-    if (this.params) this.endDate = moment(params.end)
+    if (params && params.start) this.startDate = moment(params.start)
+    if (params && params.end) this.endDate = moment(params.end)
     this.errors = {}
   }
 

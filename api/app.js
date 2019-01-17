@@ -4,25 +4,25 @@ const express = require('express')
 const getEarthquakes = require('./earthquakes.js')
 const getHolidays = require('./holidays.js')
 const app = express()
-const port = 3001
 
 app.use('/', express.static('public'))
-app.get('/api/holiday', (req, res, next) => {
+app.get('/api/holidays', (req, res, next) => {
   getHolidays(req.query).then((data) => {
-    res.send(JSON.stringify(data))
+    res.send(data)
   }).catch((error) => {
-    res.status(400).send(JSON.stringify(error))
+    res.status(400).send({'errors': error})
   }).finally(() => {
     next()
   })
 })
-app.get('/api/earthquake', (req, res, next) => {
+app.get('/api/earthquakes', (req, res, next) => {
   getEarthquakes(req.query).then((data) => {
-    res.send(JSON.stringify(data))
+    res.json(data)
   }).catch((error) => {
-    res.status(400).send(JSON.stringify(error))
+    res.status(400).json({'errors': error})
   }).finally(() => {
     next()
   })
 })
-app.listen(port, () => console.log(`Listening on port ${port}!`))
+
+module.exports = app

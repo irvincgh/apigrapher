@@ -28,7 +28,7 @@ class Graph extends React.Component {
   }
 
   getEarthquakes(graph) {
-    return fetch(`/api/earthquake?start=${graph.start}&end=${graph.end}&location=losangeles`).then((response) => {
+    return fetch(`/api/earthquakes?start=${graph.start}&end=${graph.end}`).then((response) => {
       return response.json()
     }).then((data) => {
       return data.features.map((obj) => { return { date: new Date(obj.properties.time), value: obj.properties.mag } })
@@ -36,7 +36,7 @@ class Graph extends React.Component {
   }
 
   getHolidays(graph) {
-    return fetch(`/api/holiday?start=${graph.start}&end=${graph.end}`).then((response) => {
+    return fetch(`/api/holidays?start=${graph.start}&end=${graph.end}`).then((response) => {
       return response.json()
     }).then((data) => {
       return data.map((holiday) => { return { date: new Date(holiday.date), value: holiday.name} })

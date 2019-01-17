@@ -22,6 +22,6 @@ const get = function get(params, gotIt) {
   return Promise.all(promises).then((results) => {
     return results.map((result) => {return JSON.parse(result)}).flat()
   })
-};
+}
 
 module.exports = get;

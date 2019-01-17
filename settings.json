@@ -1,4 +1,10 @@
 {
+  "external": {
+    "earthquakes": {
+      "urlRoot": "https://earthquake.usgs.gov",
+      "urlPath": "fdsnws/event/1/query"
+    }
+  },
   "validations": {
     "maxDuration": 10,
     "maxYearsPast": 25
