@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import DatePicker from './date-picker.jsx'
 import moment from 'moment'
 
@@ -6,6 +7,12 @@ const DEFAULT_SPREAD = 31
 const DATE_FORMAT = 'YYYY-MM-DD'
 
 class GraphForm extends React.Component {
+  static get propTypes() {
+    return {
+      handleSubmit: PropTypes.func
+    }
+  }
+
   constructor(props) {
     super(props)
     this.state = {

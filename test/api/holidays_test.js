@@ -79,7 +79,6 @@ describe('Holidays API', function() {
           expect(resultStatus).to.equal(200)
         })
         it('returns with expected number of holidays', function() {
-          console.log(resultBody)
           expect(resultBody.length).to.equal(11)
         })
         it('returns with holidays in expected format', function() {

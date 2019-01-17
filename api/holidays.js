@@ -12,7 +12,7 @@ const filterDates = function filterDates(holidays, start, end) {
   })
 }
 
-const get = function get(params, gotIt) {
+const get = function get(params) {
   const validator = new Validator(params)
   if (!validator.validate()) return validator.errorsPromise()
 
@@ -26,7 +26,7 @@ const get = function get(params, gotIt) {
     const options = {
       method: 'GET',
       url: `${settings.external.holidays.urlRoot}/${settings.external.holidays.urlPath}/${year}`
-    };
+    }
     promises.push(requestPromise(options))
   }
 

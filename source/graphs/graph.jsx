@@ -1,7 +1,14 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import Grapher from './grapher.jsx'
 
 class Graph extends React.Component {
+  static get propTypes() {
+    return {
+      graph: PropTypes.object
+    }
+  }
+
   componentDidMount() {
     const grapher = new Grapher(this.props.graph)
     grapher.render(this.getEarthquakes(this.props.graph), this.getHolidays(this.props.graph))

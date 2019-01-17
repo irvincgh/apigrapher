@@ -13,7 +13,6 @@ class Grapher {
   }
 
   async render(dotData, lineData) {
-    //set height/width of the svg
     this.graph = d3.select(`#graph-${this.id}`)
       .attr('width', this.width)
       .attr('height', this.height)
@@ -31,19 +30,18 @@ class Grapher {
   drawBottomAxis() {
     const bottomAxis = d3.axisBottom(this.xScale)
     this.graph
-      .append('g') //append a <g> to it
-        .attr('id', 'x-axis') //add an id
-      .call(bottomAxis) //call the axis generator on that <g> so that an axis is generated within it
-        .attr('transform', 'translate(0,'+this.height+')') //move the axis to the bottom of the SVG
+      .append('g')
+      .attr('id', 'x-axis')
+      .call(bottomAxis)
+      .attr('transform', 'translate(0,'+this.height+')')
   }
 
   drawLeftAxis() {
-    //create a leftAxis generator.  Pass the yScale so it knows how to label the axis
     const leftAxis = d3.axisLeft(this.yScale)
-    this.graph //select the outer SVG
-      .append('g') //append a <g> to it
-        .attr('id', 'y-axis') //add an id
-      .call(leftAxis) //call the axis generator on that <g> so that an axis is generated within it
+    this.graph
+      .append('g')
+      .attr('id', 'y-axis')
+      .call(leftAxis)
   }
 
   plotVerticalLines(data) {
@@ -52,14 +50,14 @@ class Grapher {
       .data(data)
       .enter()
       .append('line')
-      .attr('x1', (datum, index) => {
+      .attr('x1', (datum) => {
         if (!datum.date) {
           this.logger.error('Graph data does not contain date property')
         }
         return this.xScale(datum.date.getTime())
       })
       .attr('y1', 0)
-      .attr('x2', (datum, index) => {
+      .attr('x2', (datum) => {
         return this.xScale(datum.date.getTime())
       })
       .attr('y2', this.height)
@@ -90,10 +88,10 @@ class Grapher {
       .data(data)
       .enter().append('circle')
       .attr('r', 3)
-      .attr('cy', (datum, index) => {
+      .attr('cy', (datum) => {
         return this.yScale(datum.value)
       })
-      .attr('cx', (datum, index) => {
+      .attr('cx', (datum) => {
         return this.xScale(datum.date.getTime())
       })
       // .on('click', function(datum) {
