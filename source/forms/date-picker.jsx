@@ -1,5 +1,5 @@
-import Pikaday from 'pikaday';
-import React from 'react';
+import Pikaday from 'pikaday'
+import React from 'react'
 
 
 class DatePicker extends React.Component {
@@ -14,4 +14,4 @@ class DatePicker extends React.Component {
   }
 }
 
-export default DatePicker;
+export default DatePicker

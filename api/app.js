@@ -8,9 +8,9 @@ const app = express()
 app.use('/', express.static('public'))
 app.get('/api/holidays', (req, res, next) => {
   getHolidays(req.query).then((data) => {
-    res.send(data)
+    res.json(data)
   }).catch((error) => {
-    res.status(400).send({'errors': error})
+    res.status(400).json({'errors': error})
   }).finally(() => {
     next()
   })

@@ -1,11 +1,10 @@
-'use strict';
+'use strict'
 
-const requestPromise = require('request-promise');
+const requestPromise = require('request-promise')
 const Validator = require('../validator.js')
 const settings = require('../settings.json')
 
 const DEFAULT_LOCATION = 'losangeles'
-
 
 const get = function get(params) {
   const validator = new Validator(params)
@@ -26,8 +25,8 @@ const get = function get(params) {
   }
 
   return requestPromise(options).then((results) => {
-    return JSON.parse(results);
+    return JSON.parse(results)
   })
-};
+}
 
-module.exports = get;
+module.exports = get

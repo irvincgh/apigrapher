@@ -1,6 +1,6 @@
-import React from 'react';
-import DatePicker from './date-picker.jsx';
-import moment from 'moment';
+import React from 'react'
+import DatePicker from './date-picker.jsx'
+import moment from 'moment'
 
 const DEFAULT_SPREAD = 31
 const DATE_FORMAT = 'YYYY-MM-DD'
@@ -38,8 +38,8 @@ class GraphForm extends React.Component {
         <span>End: </span><DatePicker fieldId="end-at" value={this.state.end} handler={this.handleEndChange.bind(this)} />
         <button>Graph!</button>
       </form>
-    );
+    )
   }
 }
 
-export default GraphForm;
+export default GraphForm

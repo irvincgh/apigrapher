@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom'
 import GraphList from './graphs/graph-list.jsx'
 import GraphForm from './forms/graph-form.jsx'
 
-
 class App extends React.Component {
   constructor(props) {
     super(props)

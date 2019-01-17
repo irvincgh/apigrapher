@@ -3,6 +3,10 @@
     "earthquakes": {
       "urlRoot": "https://earthquake.usgs.gov",
       "urlPath": "fdsnws/event/1/query"
+    },
+    "holidays": {
+      "urlRoot": "https://date.nager.at",
+      "urlPath": "api/v1/get/US"
     }
   },
   "validations": {

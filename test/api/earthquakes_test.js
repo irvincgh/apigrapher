@@ -44,7 +44,7 @@ describe('Earthquakes API', function() {
           .persist()
           .get(`/${settings.external.earthquakes.urlPath}`)
           .query(true)
-          .reply(200, JSON.stringify(mockEarthquakes));
+          .reply(200, JSON.stringify(mockEarthquakes))
       })
       before(function() {
         const end = moment()
