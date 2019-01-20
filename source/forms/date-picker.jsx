@@ -12,7 +12,7 @@ class DatePicker extends React.Component {
   }
 
   componentDidMount() {
-    Pikaday({field: document.getElementById(this.props.fieldId)})
+    new Pikaday({field: document.getElementById(this.props.fieldId)})
   }
 
   render() {

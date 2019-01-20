@@ -17,11 +17,11 @@ class Grapher {
       .attr('width', this.width)
       .attr('height', this.height)
 
-    this.initXScale(await dotData)
-    this.initYScale(await dotData)
+    this.initXScale(dotData)
+    this.initYScale(dotData)
 
-    this.plotDots(await dotData)
-    this.plotVerticalLines(await lineData)
+    this.plotDots(dotData)
+    this.plotVerticalLines(lineData)
 
     this.drawBottomAxis()
     this.drawLeftAxis()
@@ -50,35 +50,31 @@ class Grapher {
       .data(data)
       .enter()
       .append('line')
-      .attr('x1', (datum) => {
-        if (!datum.date) {
+      .attr('x1', (data) => {
+        if (!data.date) {
           this.logger.error('Graph data does not contain date property')
         }
-        return this.xScale(datum.date.getTime())
+        return this.xScale(data.date.getTime())
       })
       .attr('y1', 0)
-      .attr('x2', (datum) => {
-        return this.xScale(datum.date.getTime())
+      .attr('x2', (data) => {
+        return this.xScale(data.date.getTime())
       })
       .attr('y2', this.height)
       .attr('stroke-width', 1)
       .attr('stroke', 'grey')
       .attr('stroke-dasharray', '2')
-      // .on('click', function(datum) {
-      //   d3.event.stopPropagation()
-      //   alert(`Holiday: ${datum.value}`)
-      // })
 
     this.graph.select(`#labels-${this.id}`)
       .selectAll('text')
       .data(data)
       .enter()
       .append('text')
-      .attr('transform', (datum) => {
-        return `translate(${this.xScale(datum.date.getTime())+6},10)rotate(90)`
+      .attr('transform', (data) => {
+        return `translate(${this.xScale(data.date.getTime())+6},10)rotate(90)`
       })
-      .text(function(datum) {
-        return datum.value
+      .text(function(data) {
+        return data.value
       })
   }
 
@@ -86,24 +82,20 @@ class Grapher {
     this.graph.select(`#points-${this.id}`)
       .selectAll('circle')
       .data(data)
-      .enter().append('circle')
+      .enter()
+      .append('circle')
       .attr('r', 3)
-      .attr('cy', (datum) => {
-        return this.yScale(datum.value)
+      .attr('cy', (data) => {
+        return this.yScale(data.value)
       })
-      .attr('cx', (datum) => {
-        return this.xScale(datum.date.getTime())
+      .attr('cx', (data) => {
+        return this.xScale(data.date.getTime())
       })
-      // .on('click', function(datum) {
-      //   d3.event.stopPropagation()
-      //   alert(`${datum.date}: ${datum.value}`)
-      // })
-      // .exit().remove()
   }
 
   initXScale(data) {
-    const xDomain = d3.extent(data, function(datum) {
-      return datum.date.getTime()
+    const xDomain = d3.extent(data, function(data) {
+      return data.date.getTime()
     })
     this.xScale = d3
       .scaleTime()
@@ -112,14 +104,14 @@ class Grapher {
   }
 
   initYScale(data) {
-    const yDomain = d3.extent(data, function(datum) {
-      return datum.value
+    const yDomain = d3.extent(data, function(data) {
+      return data.value
     })
     this.yScale = d3
       .scaleLinear()
       .range([this.height, 0])
-      .domain(yDomain) //set domain of yScale to min/max values created by d3.extent in the last step
+      .domain(yDomain)
   }
 }
 
-export default Grapher
+export { Grapher, DEFAULT_WIDTH, DEFAULT_HEIGHT }
