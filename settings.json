@@ -7,6 +7,8 @@
     "holidays": {
       "urlRoot": "https://date.nager.at",
       "urlPath": "api/v1/get/US"
+    },
+    "random": {
     }
   },
   "validations": {
