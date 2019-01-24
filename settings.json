@@ -1,5 +1,9 @@
 {
   "external": {
+    "bikeCrimes": {
+      "urlRoot": "https://bikewise.org",
+      "urlPath": "api/v2/incidents"
+    },
     "earthquakes": {
       "urlRoot": "https://earthquake.usgs.gov",
       "urlPath": "fdsnws/event/1/query"
@@ -9,6 +13,10 @@
       "urlPath": "api/v1/get/US"
     },
     "random": {
+    },
+    "launches": {
+      "urlRoot": "https://launchlibrary.net",
+      "urlPath": "1.3/launch"
     }
   },
   "validations": {
