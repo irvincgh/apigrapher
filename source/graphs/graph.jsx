@@ -57,6 +57,45 @@ class Graph extends React.Component {
     )
   }
 
+  getRandoms(graph) {
+    return fetch(`/api/randomness?start=${graph.start}&end=${graph.end}`).then((response) => {
+      return this.catchResponse(response)
+    }).then(
+      (data) => {
+        return data.map((item) => {return {date: new Date(item.date), value: item.value}})
+      },
+      (error) => {
+        throw error
+      }
+    )
+  }
+
+  getLaunches(graph) {
+    return fetch(`/api/launches?start=${graph.start}&end=${graph.end}`).then((response) => {
+      return this.catchResponse(response)
+    }).then(
+      (data) => {
+        return data.map((launch) => {return {date: new Date(launch.net), value: launch.name}})
+      },
+      (error) => {
+        throw error
+      }
+    )
+  }
+
+  getBikeCrimes(graph) {
+    return fetch(`/api/bikecrimes?start=${graph.start}&end=${graph.end}`).then((response) => {
+      return this.catchResponse(response)
+    }).then(
+      (data) => {
+        return data.map((crime) => {return {date: new Date(crime.occurred_at * 1000), value: crime.title}})
+      },
+      (error) => {
+        throw error
+      }
+    )
+  }
+
   catchResponse(response) {
     return response.json().then((contents) => {
       if (response.status === 200) {
@@ -84,7 +123,10 @@ class Graph extends React.Component {
     try {
       const earthquakes = await this.getEarthquakes(this.props.graph)
       const holidays = await this.getHolidays(this.props.graph)
-      grapher.render(earthquakes, holidays)
+      const randoms = await this.getRandoms(this.props.graph)
+      const launches = await this.getLaunches(this.props.graph)
+      const bikeCrimes = await this.getBikeCrimes(this.props.graph)
+      grapher.render(randoms, bikeCrimes)
       this.hideLoadingScreen()
     } catch(error) {
       const loadingText = document.getElementById(`graph-loading-text-${this.props.graph.id}`)
