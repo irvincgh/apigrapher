@@ -43,11 +43,11 @@ describe('Bike Crimes API', function() {
         nock(settings.external.bikeCrimes.urlRoot)
           .persist()
           .get(`/${settings.external.bikeCrimes.urlPath}?occurred_after=1388563200&occurred_before=1433142000&proximity=Manhattan%2C%20NY&proximity_square=50&per_page=100&page=1&incident_type=theft`)
-          .reply(200, JSON.stringify(mockCrimes["1"]))
+          .reply(200, JSON.stringify(mockCrimes['1']))
           .get(`/${settings.external.bikeCrimes.urlPath}?occurred_after=1388563200&occurred_before=1433142000&proximity=Manhattan%2C%20NY&proximity_square=50&per_page=100&page=2&incident_type=theft`)
-          .reply(200, JSON.stringify(mockCrimes["2"]))
+          .reply(200, JSON.stringify(mockCrimes['2']))
           .get(`/${settings.external.bikeCrimes.urlPath}?occurred_after=1388563200&occurred_before=1433142000&proximity=Manhattan%2C%20NY&proximity_square=50&per_page=100&page=3&incident_type=theft`)
-          .reply(200, JSON.stringify(mockCrimes["3"]))
+          .reply(200, JSON.stringify(mockCrimes['3']))
       })
       before(function() {
         path = `/api/bikecrimes?start=2014-01-01&end=2015-06-01`

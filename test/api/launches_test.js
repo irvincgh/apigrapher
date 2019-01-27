@@ -43,11 +43,11 @@ describe('Launches API', function() {
         nock(settings.external.launches.urlRoot)
           .persist()
           .get(`/${settings.external.launches.urlPath}?startdate=2017-01-01&enddate=2019-01-01&limit=100&offset=0`)
-          .reply(200, JSON.stringify(mockLaunches["0"]))
+          .reply(200, JSON.stringify(mockLaunches['0']))
           .get(`/${settings.external.launches.urlPath}?startdate=2017-01-01&enddate=2019-01-01&limit=100&offset=100`)
-          .reply(200, JSON.stringify(mockLaunches["100"]))
+          .reply(200, JSON.stringify(mockLaunches['100']))
           .get(`/${settings.external.launches.urlPath}?startdate=2017-01-01&enddate=2019-01-01&limit=100&offset=200`)
-          .reply(200, JSON.stringify(mockLaunches["200"]))
+          .reply(200, JSON.stringify(mockLaunches['200']))
       })
 
       before(function() {
