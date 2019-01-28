@@ -2,21 +2,26 @@
   "external": {
     "bikeCrimes": {
       "urlRoot": "https://bikewise.org",
-      "urlPath": "api/v2/incidents"
+      "urlPath": "api/v2/incidents",
+      "graphTypes": ["scatter", "line", "bar"]
     },
     "earthquakes": {
       "urlRoot": "https://earthquake.usgs.gov",
-      "urlPath": "fdsnws/event/1/query"
+      "urlPath": "fdsnws/event/1/query",
+      "graphTypes": ["scatter"]
     },
     "holidays": {
       "urlRoot": "https://date.nager.at",
-      "urlPath": "api/v1/get/US"
+      "urlPath": "api/v1/get/US",
+      "graphTypes": ["verticals"]
     },
     "random": {
+      "graphTypes": ["scatter"]
     },
     "launches": {
       "urlRoot": "https://launchlibrary.net",
-      "urlPath": "1.3/launch"
+      "urlPath": "1.3/launch",
+      "graphTypes": ["verticals"]
     }
   },
   "validations": {

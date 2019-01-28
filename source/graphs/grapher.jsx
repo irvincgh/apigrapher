@@ -16,15 +16,10 @@ class Grapher {
     this.graph = d3.select(`#graph-${this.id}`)
       .attr('width', this.width)
       .attr('height', this.height)
-
     this.initXScale(dotData)
-    this.initYScale(dotData)
-
     this.plotDots(dotData)
     this.plotVerticalLines(lineData)
-
     this.drawBottomAxis()
-    this.drawLeftAxis()
   }
 
   drawBottomAxis() {
@@ -36,8 +31,8 @@ class Grapher {
       .attr('transform', 'translate(0,'+this.height+')')
   }
 
-  drawLeftAxis() {
-    const leftAxis = d3.axisLeft(this.yScale)
+  drawLeftAxis(scale) {
+    const leftAxis = d3.axisLeft(scale)
     this.graph
       .append('g')
       .attr('id', 'y-axis')
@@ -79,6 +74,8 @@ class Grapher {
   }
 
   plotDots(data) {
+    const yScale = this.getYScale(data)
+
     this.graph.select(`#points-${this.id}`)
       .selectAll('circle')
       .data(data)
@@ -86,11 +83,13 @@ class Grapher {
       .append('circle')
       .attr('r', 3)
       .attr('cy', (data) => {
-        return this.yScale(data.value)
+        return yScale(data.value)
       })
       .attr('cx', (data) => {
         return this.xScale(data.date.getTime())
       })
+
+    this.drawLeftAxis(yScale)
   }
 
   initXScale(data) {
@@ -103,11 +102,11 @@ class Grapher {
       .domain(xDomain)
   }
 
-  initYScale(data) {
+  getYScale(data) {
     const yDomain = d3.extent(data, function(data) {
       return data.value
     })
-    this.yScale = d3
+    return d3
       .scaleLinear()
       .range([this.height, 0])
       .domain(yDomain)
