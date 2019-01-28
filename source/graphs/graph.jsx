@@ -126,7 +126,9 @@ class Graph extends React.Component {
       const randoms = await this.getRandoms(this.props.graph)
       const launches = await this.getLaunches(this.props.graph)
       const bikeCrimes = await this.getBikeCrimes(this.props.graph)
-      grapher.render(randoms, bikeCrimes)
+      grapher.initGraph()
+      grapher.plotScatter(earthquakes)
+      grapher.plotVerticals(holidays)
       this.hideLoadingScreen()
     } catch(error) {
       const loadingText = document.getElementById(`graph-loading-text-${this.props.graph.id}`)

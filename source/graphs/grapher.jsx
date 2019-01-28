@@ -7,18 +7,18 @@ const DEFAULT_HEIGHT = 600
 class Grapher {
   constructor(props) {
     this.id = props.id
+    this.start = new Date(props.start)
+    this.end = new Date(props.end)
     this.width = props.width || DEFAULT_WIDTH
     this.height = props.height || DEFAULT_HEIGHT
     this.logger = new Logger()
   }
 
-  async render(dotData, lineData) {
+  initGraph() {
     this.graph = d3.select(`#graph-${this.id}`)
       .attr('width', this.width)
       .attr('height', this.height)
-    this.initXScale(dotData)
-    this.plotDots(dotData)
-    this.plotVerticalLines(lineData)
+    this.initXScale()
     this.drawBottomAxis()
   }
 
@@ -39,7 +39,7 @@ class Grapher {
       .call(leftAxis)
   }
 
-  plotVerticalLines(data) {
+  plotVerticals(data) {
     this.graph.select(`#lines-${this.id}`)
       .selectAll('line')
       .data(data)
@@ -73,7 +73,7 @@ class Grapher {
       })
   }
 
-  plotDots(data) {
+  plotScatter(data) {
     const yScale = this.getYScale(data)
 
     this.graph.select(`#points-${this.id}`)
@@ -92,14 +92,11 @@ class Grapher {
     this.drawLeftAxis(yScale)
   }
 
-  initXScale(data) {
-    const xDomain = d3.extent(data, function(data) {
-      return data.date.getTime()
-    })
+  initXScale() {
     this.xScale = d3
       .scaleTime()
       .range([0, this.width])
-      .domain(xDomain)
+      .domain([this.start, this.end])
   }
 
   getYScale(data) {

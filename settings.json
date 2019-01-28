@@ -3,7 +3,7 @@
     "bikeCrimes": {
       "urlRoot": "https://bikewise.org",
       "urlPath": "api/v2/incidents",
-      "graphTypes": ["scatter", "line", "bar"]
+      "graphTypes": ["launches"]
     },
     "earthquakes": {
       "urlRoot": "https://earthquake.usgs.gov",
