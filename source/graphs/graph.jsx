@@ -152,8 +152,10 @@ class Graph extends React.Component {
     const grapher = new Grapher(this.props.graph)
     try {
       grapher.initGraph()
-      await this.plot(grapher, this.props.graph.dataSelections[0])
-      await this.plot(grapher, this.props.graph.dataSelections[1])
+      const plotA = this.plot(grapher, this.props.graph.dataSelections[0])
+      const plotB = this.plot(grapher, this.props.graph.dataSelections[1])
+      await plotA
+      await plotB
       this.hideLoadingScreen()
     } catch(error) {
       const loadingText = document.getElementById(`graph-loading-text-${this.props.graph.id}`)
