@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import settings from '../../settings.json'
 import {DEFAULT_HEIGHT, DEFAULT_WIDTH, Grapher} from './grapher.jsx'
 
 class Graph extends React.Component {
@@ -118,17 +119,41 @@ class Graph extends React.Component {
     loading.parentNode.removeChild(loading)
   }
 
+  async plot(grapher, key) {
+    const dataSettings = settings.external[key]
+    let data
+
+    switch (key) {
+      case 'bikeCrimes':
+        data = await this.getBikeCrimes(this.props.graph)
+        break
+      case 'earthquakes':
+        data = await this.getEarthquakes(this.props.graph)
+        break
+      case 'holidays':
+        data = await this.getHolidays(this.props.graph)
+        break
+      case 'random':
+        data = await this.getRandoms(this.props.graph)
+        break
+      case 'launches':
+        data = await this.getLaunches(this.props.graph)
+        break
+    }
+
+    if (dataSettings.graphTypes.includes('scatter')) {
+      grapher.plotScatter(data)
+    } else if (dataSettings.graphTypes.includes('verticals')) {
+      grapher.plotVerticals(data)
+    }
+  }
+
   async generateGraph() {
     const grapher = new Grapher(this.props.graph)
     try {
-      const earthquakes = await this.getEarthquakes(this.props.graph)
-      const holidays = await this.getHolidays(this.props.graph)
-      const randoms = await this.getRandoms(this.props.graph)
-      const launches = await this.getLaunches(this.props.graph)
-      const bikeCrimes = await this.getBikeCrimes(this.props.graph)
       grapher.initGraph()
-      grapher.plotScatter(earthquakes)
-      grapher.plotVerticals(holidays)
+      await this.plot(grapher, this.props.graph.dataSelections[0])
+      await this.plot(grapher, this.props.graph.dataSelections[1])
       this.hideLoadingScreen()
     } catch(error) {
       const loadingText = document.getElementById(`graph-loading-text-${this.props.graph.id}`)

@@ -20,10 +20,11 @@ class App extends React.Component {
     )
   }
 
-  createGraph(start, end) {
+  createGraph(dataSelections, start, end) {
     const graphs = this.state.graphs
     const newGraph = {
       id: this.state.currentGraphId,
+      dataSelections: dataSelections,
       start: start,
       end: end
     }

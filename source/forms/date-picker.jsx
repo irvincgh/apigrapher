@@ -6,6 +6,7 @@ class DatePicker extends React.Component {
   static get propTypes() {
     return {
       fieldId: PropTypes.string,
+      inputRef: PropTypes.object,
       value: PropTypes.string,
       handler: PropTypes.func
     }
@@ -17,7 +18,7 @@ class DatePicker extends React.Component {
 
   render() {
     return (
-      <input type="text" id={this.props.fieldId} defaultValue={this.props.value} onBlur={this.props.handler} />
+      <input type="text" ref={this.props.inputRef} id={this.props.fieldId} defaultValue={this.props.value} onBlur={this.props.handler} />
     )
   }
 }
