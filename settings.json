@@ -4,7 +4,7 @@
       "name": "New York City Bike Thefts",
       "urlRoot": "https://bikewise.org",
       "urlPath": "api/v2/incidents",
-      "graphTypes": ["scatter"]
+      "graphTypes": ["bar"]
     },
     "earthquakes": {
       "name": "Los Angeles Earthquakes",

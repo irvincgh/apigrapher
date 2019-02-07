@@ -39,6 +39,30 @@ class Grapher {
       .call(leftAxis)
   }
 
+  plotBar(data) {
+    const xScale = d3
+      .scaleBand()
+      .range([0, this.width])
+      .domain(data.map((data) => { return data.date.getTime() }))
+    const yScale = this.getYScale(data)
+
+    this.graph.select(`#bars-${this.id}`)
+      .selectAll('bar')
+      .data(data)
+      .enter()
+      .append('rect')
+      .attr('x', (data) => {
+        return xScale(data.date.getTime())
+      })
+      .attr('width', xScale.bandwidth())
+      .attr('y', (data) => {
+        return yScale(data.value)
+      })
+      .attr('height', (data) => {
+        return this.height - yScale(data.value)
+      })
+  }
+
   plotVerticals(data) {
     this.graph.select(`#lines-${this.id}`)
       .selectAll('line')

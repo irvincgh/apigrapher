@@ -57,13 +57,12 @@ describe('Bike Crimes API', function() {
         expect(resultStatus).to.equal(200)
       })
       it('returns with expected number of bike crimes', function() {
-        expect(resultBody.length).to.equal(153)
+        expect(resultBody.length).to.equal(124)
       })
       it('returns with bike crimes in expected format', function() {
-        for (let i = 0; i < 153; i++) {
-          const key = Math.floor(i / 100) + 1
-          const index = i - ((key - 1) * 100)
-          expect(resultBody[i].occurred_at).to.equal(mockCrimes[key.toString()].incidents[index].occurred_at)
+        for (let i = 0; i < 124; i++) {
+          expect(resultBody[i].value).to.be.a('number')
+          expect(resultBody[i].date).to.match(/\d{4}-\d{2}-\d{2}/)
         }
       })
     })

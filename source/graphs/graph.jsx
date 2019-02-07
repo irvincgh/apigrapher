@@ -22,6 +22,7 @@ class Graph extends React.Component {
             <g id={`points-${this.props.graph.id}`}></g>
             <g id={`lines-${this.props.graph.id}`}></g>
             <g id={`labels-${this.props.graph.id}`}></g>
+            <g id={`bars-${this.props.graph.id}`}></g>
           </svg>
           <svg id={`graph-loading-${this.props.graph.id}`}>
             <rect id={`graph-loading-box-${this.props.graph.id}`} width="100%" height="100%" style={{'fill':'rgb(255,255,255)'}} />
@@ -89,7 +90,7 @@ class Graph extends React.Component {
       return this.catchResponse(response)
     }).then(
       (data) => {
-        return data.map((crime) => {return {date: new Date(crime.occurred_at * 1000), value: crime.title}})
+        return data.map((crime) => {return {date: new Date(crime.date), value: crime.value}})
       },
       (error) => {
         throw error
@@ -145,6 +146,8 @@ class Graph extends React.Component {
       grapher.plotScatter(data)
     } else if (dataSettings.graphTypes.includes('verticals')) {
       grapher.plotVerticals(data)
+    } else if (dataSettings.graphTypes.includes('bar')) {
+      grapher.plotBar(data)
     }
   }
 

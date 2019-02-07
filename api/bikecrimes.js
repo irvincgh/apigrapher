@@ -24,12 +24,23 @@ const makeRequest = function makeRequest(crimes, start, end, page) {
 
   return requestPromise(options).then((response) => {
     const results = JSON.parse(response)
-    crimes = crimes.concat(results.incidents)
+
+    for (const incident of results.incidents) {
+      const date = moment(incident.occurred_at * 1000).format('YYYY-MM-DD')
+      crimes[date] = crimes[date] === undefined ? 1 : crimes[date] + 1
+    }
 
     if (results.incidents.length > 0) {
       return makeRequest(crimes, start, end, page + 1)
     } else {
-      return crimes.flat()
+      const crimesArray = []
+      for (const date in crimes) {
+        crimesArray.push({
+          date: date,
+          value: crimes[date]
+        })
+      }
+      return crimesArray
     }
   })
 }
@@ -41,7 +52,7 @@ const get = function get(params) {
   const unixStart = moment(params['start']).unix()
   const unixEnd = moment(params['end']).unix()
 
-  return makeRequest([], unixStart, unixEnd, 1)
+  return makeRequest({}, unixStart, unixEnd, 1)
 }
 
 module.exports = get
