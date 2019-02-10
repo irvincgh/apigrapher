@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import settings from '../../settings.json'
-import {DEFAULT_HEIGHT, DEFAULT_WIDTH, Grapher} from './grapher.jsx'
+import {MARGINS, DEFAULT_HEIGHT, DEFAULT_WIDTH, Grapher} from './grapher.jsx'
 
 class Graph extends React.Component {
   static get propTypes() {
@@ -19,14 +19,14 @@ class Graph extends React.Component {
       <div id={`graph-wrapper-${this.props.graph.id}`}>
         <svg height={DEFAULT_HEIGHT} width={DEFAULT_WIDTH} id={`graph-${this.props.graph.id}`}>
           <svg>
-            <g id={`points-${this.props.graph.id}`}></g>
-            <g id={`lines-${this.props.graph.id}`}></g>
-            <g id={`labels-${this.props.graph.id}`}></g>
-            <g id={`bars-${this.props.graph.id}`}></g>
+            <g id={`points-${this.props.graph.id}`} transform={`translate(${MARGINS.left}, ${MARGINS.top})`}></g>
+            <g id={`lines-${this.props.graph.id}`} transform={`translate(${MARGINS.left}, ${MARGINS.top})`}></g>
+            <g id={`labels-${this.props.graph.id}`} transform={`translate(${MARGINS.left}, ${MARGINS.top})`}></g>
+            <g id={`bars-${this.props.graph.id}`} transform={`translate(${MARGINS.left}, ${MARGINS.top})`}></g>
           </svg>
           <svg id={`graph-loading-${this.props.graph.id}`}>
-            <rect id={`graph-loading-box-${this.props.graph.id}`} width="100%" height="100%" style={{'fill':'rgb(255,255,255)'}} />
-            <text id={`graph-loading-text-${this.props.graph.id}`} x="50%" y="50%" textAnchor="middle">Loading...</text>
+            <rect id={`graph-loading-box-${this.props.graph.id}`} width='100%' height='100%' style={{'fill':'rgb(255,255,255)'}} />
+            <text id={`graph-loading-text-${this.props.graph.id}`} x='50%' y='50%' textAnchor='middle'>Loading...</text>
           </svg>
         </svg>
       </div>

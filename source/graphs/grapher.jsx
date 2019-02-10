@@ -3,6 +3,12 @@ import Logger from '../logger.jsx'
 
 const DEFAULT_WIDTH = 800
 const DEFAULT_HEIGHT = 600
+const MARGINS = {
+  left: 25,
+  right: 15,
+  bottom: 25,
+  top: 15
+}
 
 class Grapher {
   constructor(props) {
@@ -11,6 +17,8 @@ class Grapher {
     this.end = new Date(props.end)
     this.width = props.width || DEFAULT_WIDTH
     this.height = props.height || DEFAULT_HEIGHT
+    this.graphableWidth = this.width - (MARGINS.left + MARGINS.right)
+    this.graphableHeight = this.height - (MARGINS.top + MARGINS.bottom)
     this.logger = new Logger()
   }
 
@@ -23,12 +31,14 @@ class Grapher {
   }
 
   drawBottomAxis() {
-    const bottomAxis = d3.axisBottom(this.xScale)
+    const bottomAxis = d3
+      .axisBottom(this.xScale)
+      .tickFormat(d3.timeFormat('%m/%d'))
     this.graph
       .append('g')
       .attr('id', 'x-axis')
       .call(bottomAxis)
-      .attr('transform', 'translate(0,'+this.height+')')
+      .attr('transform', 'translate(' + MARGINS.left + ',' + (this.graphableHeight + MARGINS.top) + ')')
   }
 
   drawLeftAxis(scale) {
@@ -36,16 +46,24 @@ class Grapher {
     this.graph
       .append('g')
       .attr('id', 'y-axis')
+      .attr('transform', 'translate(' + MARGINS.left + ',' + MARGINS.top + ')')
       .call(leftAxis)
   }
 
   plotBar(data) {
+    const xDomain = []
+    let date = new Date(this.start)
+    while (date < this.end) {
+      const wholeDayTime = Math.floor(date.getTime() / 86400000) * 86400000
+      xDomain.push(wholeDayTime)
+      date = new Date(date)
+      date.setDate(date.getDate() + 1)
+    }
     const xScale = d3
       .scaleBand()
-      .range([0, this.width])
-      .domain(data.map((data) => { return data.date.getTime() }))
+      .range([0, this.graphableWidth])
+      .domain(xDomain)
     const yScale = this.getYScale(data)
-
     this.graph.select(`#bars-${this.id}`)
       .selectAll('bar')
       .data(data)
@@ -59,8 +77,10 @@ class Grapher {
         return yScale(data.value)
       })
       .attr('height', (data) => {
-        return this.height - yScale(data.value)
+        return this.graphableHeight - yScale(data.value)
       })
+
+    this.drawLeftAxis(yScale)
   }
 
   plotVerticals(data) {
@@ -79,7 +99,7 @@ class Grapher {
       .attr('x2', (data) => {
         return this.xScale(data.date.getTime())
       })
-      .attr('y2', this.height)
+      .attr('y2', this.graphableHeight)
       .attr('stroke-width', 1)
       .attr('stroke', 'grey')
       .attr('stroke-dasharray', '2')
@@ -119,19 +139,22 @@ class Grapher {
   initXScale() {
     this.xScale = d3
       .scaleTime()
-      .range([0, this.width])
-      .domain([this.start, this.end])
+      .range([0, this.graphableWidth])
+      .domain([this.start.getTime(), this.end.getTime()])
   }
 
   getYScale(data) {
-    const yDomain = d3.extent(data, function(data) {
-      return data.value
-    })
+    const yDomain = [
+      0,
+      d3.max(data, function(data) {
+        return data.value
+      })
+    ]
     return d3
       .scaleLinear()
-      .range([this.height, 0])
+      .range([this.graphableHeight, 0])
       .domain(yDomain)
   }
 }
 
-export { Grapher, DEFAULT_WIDTH, DEFAULT_HEIGHT }
+export { Grapher, DEFAULT_WIDTH, DEFAULT_HEIGHT, MARGINS }
