@@ -19,6 +19,7 @@ class Grapher {
     this.height = props.height || DEFAULT_HEIGHT
     this.graphableWidth = this.width - (MARGINS.left + MARGINS.right)
     this.graphableHeight = this.height - (MARGINS.top + MARGINS.bottom)
+    this.verticalAxisCount = 0
     this.logger = new Logger()
   }
 
@@ -41,13 +42,26 @@ class Grapher {
       .attr('transform', 'translate(' + MARGINS.left + ',' + (this.graphableHeight + MARGINS.top) + ')')
   }
 
-  drawLeftAxis(scale) {
-    const leftAxis = d3.axisLeft(scale)
+  drawVerticalAxis(scale) {
+    let verticalAxis
+    let axisLeft
+    if (this.verticalAxisCount === 0) {
+      axisLeft = MARGINS.left
+      verticalAxis = d3.axisLeft(scale)
+    } else if (this.verticalAxisCount === 1) {
+      axisLeft = MARGINS.left + this.graphableWidth
+      verticalAxis = d3.axisRight(scale)
+    }
+    const domainRange = d3.max(scale.domain()) - d3.min(scale.domain())
+    if (domainRange < 10) {
+      verticalAxis.ticks(domainRange)
+    }
     this.graph
       .append('g')
       .attr('id', 'y-axis')
-      .attr('transform', 'translate(' + MARGINS.left + ',' + MARGINS.top + ')')
-      .call(leftAxis)
+      .attr('transform', 'translate(' + axisLeft + ',' + MARGINS.top + ')')
+      .call(verticalAxis)
+    this.verticalAxisCount += 1
   }
 
   plotBar(data) {
@@ -80,7 +94,7 @@ class Grapher {
         return this.graphableHeight - yScale(data.value)
       })
 
-    this.drawLeftAxis(yScale)
+    this.drawVerticalAxis(yScale)
   }
 
   plotVerticals(data) {
@@ -133,7 +147,7 @@ class Grapher {
         return this.xScale(data.date.getTime())
       })
 
-    this.drawLeftAxis(yScale)
+    this.drawVerticalAxis(yScale)
   }
 
   initXScale() {
