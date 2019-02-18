@@ -123,7 +123,7 @@ class Graph extends React.Component {
   async plot(grapher, key) {
     const dataSettings = settings.external[key]
     let data
-
+    const label = settings.external[key].name
     switch (key) {
       case 'bikeCrimes':
         data = await this.getBikeCrimes(this.props.graph)
@@ -143,11 +143,11 @@ class Graph extends React.Component {
     }
 
     if (dataSettings.graphTypes.includes('scatter')) {
-      grapher.plotScatter(data)
+      grapher.plotScatter(data, label)
     } else if (dataSettings.graphTypes.includes('verticals')) {
       grapher.plotVerticals(data)
     } else if (dataSettings.graphTypes.includes('bar')) {
-      grapher.plotBar(data)
+      grapher.plotBar(data, label)
     }
   }
 

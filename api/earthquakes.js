@@ -10,6 +10,7 @@ const get = function get(params) {
   const validator = new Validator(params)
   if (!validator.validate()) return validator.errorsPromise()
 
+  const offset = new moment().format('Z')
   const location = settings.locations[DEFAULT_LOCATION]
   const options = {
     method: 'GET',
@@ -18,8 +19,8 @@ const get = function get(params) {
       latitude: location.latitude,
       longitude: location.longitude,
       format: 'geojson',
-      starttime: params['start'],
-      endtime: params['end'],
+      starttime: `${params['start']}T00:00:00${offset}`,
+      endtime: `${params['end']}T23:59:59${offset}`,
       maxradiuskm: 80.4672
     }
   }

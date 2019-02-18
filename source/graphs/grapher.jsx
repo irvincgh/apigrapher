@@ -3,12 +3,14 @@ import Logger from '../logger.jsx'
 
 const DEFAULT_WIDTH = 800
 const DEFAULT_HEIGHT = 600
+const LABEL_HEIGHT = 30
 const MARGINS = {
-  left: 25,
-  right: 15,
+  left: 50,
+  right: 50,
   bottom: 25,
   top: 15
 }
+const DAY_MS = 86400000
 
 class Grapher {
   constructor(props) {
@@ -42,14 +44,17 @@ class Grapher {
       .attr('transform', 'translate(' + MARGINS.left + ',' + (this.graphableHeight + MARGINS.top) + ')')
   }
 
-  drawVerticalAxis(scale) {
+  drawVerticalAxis(scale, label) {
     let verticalAxis
     let axisLeft
+    let labelLeft
     if (this.verticalAxisCount === 0) {
       axisLeft = MARGINS.left
+      labelLeft = MARGINS.left - LABEL_HEIGHT
       verticalAxis = d3.axisLeft(scale)
     } else if (this.verticalAxisCount === 1) {
       axisLeft = MARGINS.left + this.graphableWidth
+      labelLeft = axisLeft + LABEL_HEIGHT
       verticalAxis = d3.axisRight(scale)
     }
     const domainRange = d3.max(scale.domain()) - d3.min(scale.domain())
@@ -61,14 +66,20 @@ class Grapher {
       .attr('id', 'y-axis')
       .attr('transform', 'translate(' + axisLeft + ',' + MARGINS.top + ')')
       .call(verticalAxis)
+    this.graph
+      .append('g')
+      .append('text')
+      .attr('text-anchor', 'middle')
+      .attr('transform', 'translate(' + labelLeft + ',' + (this.height / 2) + ')rotate(-90)')
+      .text(label)
     this.verticalAxisCount += 1
   }
 
-  plotBar(data) {
+  plotBar(data, label) {
     const xDomain = []
     let date = new Date(this.start)
     while (date < this.end) {
-      const wholeDayTime = Math.floor(date.getTime() / 86400000) * 86400000
+      const wholeDayTime = Math.floor(date.getTime() / DAY_MS) * DAY_MS
       xDomain.push(wholeDayTime)
       date = new Date(date)
       date.setDate(date.getDate() + 1)
@@ -94,7 +105,7 @@ class Grapher {
         return this.graphableHeight - yScale(data.value)
       })
 
-    this.drawVerticalAxis(yScale)
+    this.drawVerticalAxis(yScale, label)
   }
 
   plotVerticals(data) {
@@ -131,7 +142,7 @@ class Grapher {
       })
   }
 
-  plotScatter(data) {
+  plotScatter(data, label) {
     const yScale = this.getYScale(data)
 
     this.graph.select(`#points-${this.id}`)
@@ -147,7 +158,7 @@ class Grapher {
         return this.xScale(data.date.getTime())
       })
 
-    this.drawVerticalAxis(yScale)
+    this.drawVerticalAxis(yScale, label)
   }
 
   initXScale() {
