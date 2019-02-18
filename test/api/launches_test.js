@@ -64,8 +64,8 @@ describe('Launches API', function() {
         for (let i = 0; i < 205; i++) {
           const key = Math.floor(i / 100) * 100
           const index = i - key
-          expect(resultBody[i].net).to.equal(mockLaunches[key.toString()].launches[index].net)
-          expect(resultBody[i].name).to.equal(mockLaunches[key.toString()].launches[index].name)
+          expect(resultBody[i].date).to.equal(moment(mockLaunches[key.toString()].launches[index].net.replace('UTC', '+0000'), 'MMMM D, YYYY HH:mm:ss Z').format(settings.config.dateFormat))
+          expect(resultBody[i].value).to.equal(mockLaunches[key.toString()].launches[index].name)
         }
       })
     })

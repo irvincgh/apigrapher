@@ -3,7 +3,7 @@
 const requestPromise = require('request-promise')
 const Validator = require('../validator.js')
 const settings = require('../settings.json')
-
+const moment = require('moment')
 const DEFAULT_LOCATION = 'losangeles'
 
 const get = function get(params) {
@@ -25,7 +25,12 @@ const get = function get(params) {
   }
 
   return requestPromise(options).then((results) => {
-    return JSON.parse(results)
+    return JSON.parse(results).features.map((earthquake) => {
+      return {
+        date: moment(earthquake.properties.time).format(settings.config.dateFormat),
+        value: earthquake.properties.mag
+      }
+    })
   })
 }
 

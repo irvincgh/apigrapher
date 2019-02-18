@@ -1,4 +1,7 @@
 {
+  "config": {
+    "dateFormat": "YYYY-MM-DD"
+  },
   "external": {
     "bikeCrimes": {
       "name": "New York City Bike Thefts",

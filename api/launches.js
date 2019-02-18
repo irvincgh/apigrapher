@@ -3,7 +3,7 @@
 const requestPromise = require('request-promise')
 const Validator = require('../validator.js')
 const settings = require('../settings.json')
-
+const moment = require('moment')
 const DEFAULT_LIMIT = 100
 
 const makeRequest = function makeRequest(launches, start, end, offset) {
@@ -24,7 +24,12 @@ const makeRequest = function makeRequest(launches, start, end, offset) {
     if (results.total > launches.length) {
       return makeRequest(launches, start, end, offset + DEFAULT_LIMIT)
     } else {
-      return launches.flat()
+      return launches.flat().map((launch) => {
+        return {
+          date: moment(launch.net.replace('UTC', '+0000'), 'MMMM D, YYYY HH:mm:ss Z').format(settings.config.dateFormat),
+          value: launch.name
+        }
+      })
     }
   })
 }
@@ -32,7 +37,6 @@ const makeRequest = function makeRequest(launches, start, end, offset) {
 const get = function get(params) {
   const validator = new Validator(params)
   if (!validator.validate()) return validator.errorsPromise()
-
   return makeRequest([], params['start'], params['end'], 0)
 }
 

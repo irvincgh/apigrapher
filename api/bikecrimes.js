@@ -26,7 +26,7 @@ const makeRequest = function makeRequest(crimes, start, end, page) {
     const results = JSON.parse(response)
 
     for (const incident of results.incidents) {
-      const date = moment(incident.occurred_at * 1000).format('YYYY-MM-DD')
+      const date = moment(incident.occurred_at * 1000).format(settings.config.dateFormat)
       crimes[date] = crimes[date] === undefined ? 1 : crimes[date] + 1
     }
 

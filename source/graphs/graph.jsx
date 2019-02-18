@@ -38,7 +38,7 @@ class Graph extends React.Component {
       return this.catchResponse(response)
     }).then(
       (data) => {
-        return data.features.map((obj) => {return {date: new Date(obj.properties.time), value: obj.properties.mag}})
+        return data.map((quake) => {return {date: new Date(quake.date), value: quake.value}})
       },
       (error) => {
         throw error
@@ -51,7 +51,7 @@ class Graph extends React.Component {
       return this.catchResponse(response)
     }).then(
       (data) => {
-        return data.map((holiday) => {return {date: new Date(holiday.date), value: holiday.name}})
+        return data.map((holiday) => {return {date: new Date(holiday.date), value: holiday.value}})
       },
       (error) => {
         throw error
@@ -77,7 +77,7 @@ class Graph extends React.Component {
       return this.catchResponse(response)
     }).then(
       (data) => {
-        return data.map((launch) => {return {date: new Date(launch.net), value: launch.name}})
+        return data.map((launch) => {return {date: new Date(launch.date), value: launch.value}})
       },
       (error) => {
         throw error

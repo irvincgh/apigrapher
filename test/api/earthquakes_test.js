@@ -49,18 +49,18 @@ describe('Earthquakes API', function() {
       before(function() {
         const end = moment()
         const start = moment().subtract(7, 'days')
-        path = `/api/earthquakes?start=${start.format('YYYY-MM-DD')}&end=${end.format('YYYY-MM-DD')}`
+        path = `/api/earthquakes?start=${start.format(settings.config.dateFormat)}&end=${end.format(settings.config.dateFormat)}`
       })
 
       it('is a successful request', function() {
         expect(resultStatus).to.equal(200)
       })
       it('returns with expected number of earthquakes', function() {
-        expect(resultBody.features.length).to.equal(1)
+        expect(resultBody.length).to.equal(1)
       })
       it('returns with earthquake in expected format', function() {
-        expect(resultBody.features[0].properties.time).to.equal(mockEarthquakes.features[0].properties.time)
-        expect(resultBody.features[0].properties.mag).to.equal(mockEarthquakes.features[0].properties.mag)
+        expect(resultBody[0].date).to.equal(moment(mockEarthquakes.features[0].properties.time).format(settings.config.dateFormat))
+        expect(resultBody[0].value).to.equal(mockEarthquakes.features[0].properties.mag)
       })
     })
   })
