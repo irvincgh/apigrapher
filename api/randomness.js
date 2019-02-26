@@ -1,6 +1,7 @@
 'use strict'
 
 const Validator = require('../validator.js')
+const settings = require('../settings.json')
 const moment = require('moment')
 const RANDOM_COUNT = 100
 const RANDOM_MAX = 100
@@ -13,13 +14,13 @@ const get = function get(params) {
     const result = []
     const startDate = moment(params['start'])
     const endDate = moment(params['end'])
-    const daysDiff = moment.duration(endDate.diff(startDate)).asDays()
+    const daysDiff = Math.floor(moment.duration(endDate.diff(startDate)).asDays())
 
     for (let x = 0; x < RANDOM_COUNT; x++) {
       const randomDays = Math.floor(Math.random() * (daysDiff + 1))
       const randomDate = moment(startDate).add(randomDays, 'days')
       result.push({
-        date: randomDate.format('YYYY-MM-DD'),
+        date: randomDate.format(settings.config.dateFormat),
         value: Math.floor(Math.random() * (RANDOM_MAX + 1))
       })
     }

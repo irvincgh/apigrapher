@@ -1,6 +1,6 @@
 {
   "config": {
-    "dateFormat": "YYYY-MM-DD"
+    "dateFormat": "YYYY-MM-DDT00:00:00Z"
   },
   "external": {
     "bikeCrimes": {

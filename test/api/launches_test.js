@@ -48,9 +48,6 @@ describe('Launches API', function() {
           .reply(200, JSON.stringify(mockLaunches['100']))
           .get(`/${settings.external.launches.urlPath}?startdate=2017-01-01&enddate=2019-01-01&limit=100&offset=200`)
           .reply(200, JSON.stringify(mockLaunches['200']))
-      })
-
-      before(function() {
         path = `/api/launches?start=2017-01-01&end=2019-01-01`
       })
 
@@ -67,6 +64,26 @@ describe('Launches API', function() {
           expect(resultBody[i].date).to.equal(moment(mockLaunches[key.toString()].launches[index].net.replace('UTC', '+0000'), 'MMMM D, YYYY HH:mm:ss Z').format(settings.config.dateFormat))
           expect(resultBody[i].value).to.equal(mockLaunches[key.toString()].launches[index].name)
         }
+      })
+
+      context('no results', function() {
+        before(function() {
+          nock(settings.external.launches.urlRoot)
+            .persist()
+            .get(`/${settings.external.launches.urlPath}?startdate=2016-01-01&enddate=2016-01-31&limit=100&offset=0`)
+            .reply(404, JSON.stringify(mockLaunches['none']))
+          path = `/api/launches?start=2016-01-01&end=2016-01-31`
+        })
+
+        it('is a successful request', function() {
+          expect(resultStatus).to.equal(200)
+        })
+        it('returns with expected number of launches', function() {
+          expect(resultBody.length).to.equal(0)
+        })
+        it('returns with empty array', function() {
+          expect(resultBody).to.eql([])
+        })
       })
     })
   })

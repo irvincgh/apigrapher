@@ -41,7 +41,9 @@ class GraphForm extends React.Component {
   }
 
   handleSubmit(event) {
-    this.props.handleSubmit(this.state.dataSelections, this.state.start, this.state.end)
+    const isoStart = new Date(`${this.state.start}T00:00:00`).toISOString()
+    const isoEnd = new Date(`${this.state.end}T23:59:59`).toISOString()
+    this.props.handleSubmit(this.state.dataSelections, isoStart, isoEnd)
     event.preventDefault()
   }
 

@@ -37,6 +37,10 @@ class Grapher {
     const bottomAxis = d3
       .axisBottom(this.xScale)
       .tickFormat(d3.timeFormat('%m/%d'))
+    const domainRange = d3.max(this.xScale.domain()) - d3.min(this.xScale.domain())
+    if (domainRange < (10 * DAY_MS)) {
+      bottomAxis.ticks(domainRange / DAY_MS)
+    }
     this.graph
       .append('g')
       .attr('id', 'x-axis')
@@ -79,8 +83,7 @@ class Grapher {
     const xDomain = []
     let date = new Date(this.start)
     while (date < this.end) {
-      const wholeDayTime = Math.floor(date.getTime() / DAY_MS) * DAY_MS
-      xDomain.push(wholeDayTime)
+      xDomain.push(date.getTime())
       date = new Date(date)
       date.setDate(date.getDate() + 1)
     }
@@ -95,9 +98,11 @@ class Grapher {
       .enter()
       .append('rect')
       .attr('x', (data) => {
-        return xScale(data.date.getTime())
+        return xScale(data.date.getTime()) - (xScale.bandwidth() / 2)
       })
-      .attr('width', xScale.bandwidth())
+      .attr('width', (data) => {
+        return data.date == this.start || data.date == this.end ? (xScale.bandwidth() / 2) : xScale.bandwidth()
+      })
       .attr('y', (data) => {
         return yScale(data.value)
       })
@@ -179,6 +184,10 @@ class Grapher {
       .scaleLinear()
       .range([this.graphableHeight, 0])
       .domain(yDomain)
+  }
+
+  getWholeDayTime(date) {
+    return Math.floor(date.getTime() / DAY_MS) * DAY_MS
   }
 }
 

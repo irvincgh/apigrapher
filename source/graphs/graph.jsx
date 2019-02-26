@@ -34,7 +34,7 @@ class Graph extends React.Component {
   }
 
   getEarthquakes(graph) {
-    return fetch(`/api/earthquakes?start=${graph.start}&end=${graph.end}`).then((response) => {
+    return this.makeRequest('/api/earthquakes', graph.start, graph.end).then((response) => {
       return this.catchResponse(response)
     }).then(
       (data) => {
@@ -47,7 +47,7 @@ class Graph extends React.Component {
   }
 
   getHolidays(graph) {
-    return fetch(`/api/holidays?start=${graph.start}&end=${graph.end}`).then((response) => {
+    return this.makeRequest('/api/holidays', graph.start, graph.end).then((response) => {
       return this.catchResponse(response)
     }).then(
       (data) => {
@@ -60,7 +60,7 @@ class Graph extends React.Component {
   }
 
   getRandoms(graph) {
-    return fetch(`/api/randomness?start=${graph.start}&end=${graph.end}`).then((response) => {
+    return this.makeRequest('/api/randomness', graph.start, graph.end).then((response) => {
       return this.catchResponse(response)
     }).then(
       (data) => {
@@ -73,7 +73,7 @@ class Graph extends React.Component {
   }
 
   getLaunches(graph) {
-    return fetch(`/api/launches?start=${graph.start}&end=${graph.end}`).then((response) => {
+    return this.makeRequest('/api/launches', graph.start, graph.end).then((response) => {
       return this.catchResponse(response)
     }).then(
       (data) => {
@@ -86,7 +86,7 @@ class Graph extends React.Component {
   }
 
   getBikeCrimes(graph) {
-    return fetch(`/api/bikecrimes?start=${graph.start}&end=${graph.end}`).then((response) => {
+    return this.makeRequest('/api/bikecrimes', graph.start, graph.end).then((response) => {
       return this.catchResponse(response)
     }).then(
       (data) => {
@@ -118,6 +118,10 @@ class Graph extends React.Component {
   hideLoadingScreen() {
     const loading = document.getElementById(`graph-loading-${this.props.graph.id}`)
     loading.parentNode.removeChild(loading)
+  }
+
+  makeRequest(url, start, end) {
+    return fetch(`${url}?start=${start}&end=${end}`)
   }
 
   async plot(grapher, key) {

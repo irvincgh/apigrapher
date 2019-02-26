@@ -48,7 +48,7 @@ describe('Validator', function() {
     context('end date in future', function() {
       before(function() {
         const tomorrow = moment().add(1, 'day')
-        params = { 'end': tomorrow.format('YYYY-MM-DD') }
+        params = { 'end': tomorrow.toISOString() }
         validator = new Validator(params)
       })
       it('should be false', function() {
@@ -61,8 +61,8 @@ describe('Validator', function() {
     context('start date comes after end date', function() {
       before(function() {
         params = {
-          'start': moment().subtract(1, 'day').format('YYYY-MM-DD'),
-          'end': moment().subtract(2, 'day').format('YYYY-MM-DD')
+          'start': moment().subtract(1, 'day').toISOString(),
+          'end': moment().subtract(2, 'day').toISOString()
         }
         validator = new Validator(params)
       })
@@ -76,8 +76,8 @@ describe('Validator', function() {
     context('start date to end date duration too large', function() {
       before(function() {
         params = {
-          'start': moment().subtract(settings.validations.maxDuration+1, 'years').format('YYYY-MM-DD'),
-          'end': moment().format('YYYY-MM-DD')
+          'start': moment().subtract(settings.validations.maxDuration+1, 'years').toISOString(),
+          'end': moment().toISOString()
         }
         validator = new Validator(params)
       })

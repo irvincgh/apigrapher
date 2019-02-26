@@ -33,7 +33,7 @@ const get = function get(params) {
   return Promise.all(promises).then((results) => {
     return results.map((result) => {return filterDates(JSON.parse(result), start, end)}).flat().map((holiday) => {
       return {
-        date: holiday.date,
+        date: moment(holiday.date).utcOffset(start.utcOffset()).format(settings.config.dateFormat),
         value: holiday.name
       }
     })

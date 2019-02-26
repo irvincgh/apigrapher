@@ -28,7 +28,6 @@ class Validator {
       end: []
     }
     const minimumDate = moment().subtract(settings.validations.maxYearsPast, 'years')
-    const now = moment()
     let parsableStart = true;
     let parsableEnd = true;
 
@@ -46,8 +45,9 @@ class Validator {
       }
     }
     if (parsableEnd) {
-      if (this.endDate > now) {
-        dateErrors.end.push(`Graph data must conclude with end date on before ${now.format('MM-DD-YYYY')}.`)
+      const endOfDay = moment().utcOffset(this.endDate.utcOffset()).endOf('day')
+      if (this.endDate > endOfDay) {
+        dateErrors.end.push(`Graph data must conclude with end date on before ${endOfDay.format('MM-DD-YYYY')}.`)
       }
     }
     if (parsableStart && parsableEnd) {

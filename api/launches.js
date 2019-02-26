@@ -18,20 +18,28 @@ const makeRequest = function makeRequest(launches, start, end, offset) {
     }
   }
 
-  return requestPromise(options).then((response) => {
-    const results = JSON.parse(response)
-    launches = launches.concat(results.launches)
-    if (results.total > launches.length) {
-      return makeRequest(launches, start, end, offset + DEFAULT_LIMIT)
-    } else {
-      return launches.flat().map((launch) => {
-        return {
-          date: moment(launch.net.replace('UTC', '+0000'), 'MMMM D, YYYY HH:mm:ss Z').format(settings.config.dateFormat),
-          value: launch.name
-        }
-      })
-    }
-  })
+  return requestPromise(options)
+    .catch((error) => {
+      if (error.statusCode === 404) {
+        return error.error
+      } else {
+        throw error
+      }
+    })
+    .then((response) => {
+      const results = JSON.parse(response)
+      launches = launches.concat(results.launches)
+      if (results.total > launches.length) {
+        return makeRequest(launches, start, end, offset + DEFAULT_LIMIT)
+      } else {
+        return launches.flat().map((launch) => {
+          return {
+            date: moment(launch.net.replace('UTC', '+0000'), 'MMMM D, YYYY HH:mm:ss Z').format(settings.config.dateFormat),
+            value: launch.name
+          }
+        })
+      }
+    })
 }
 
 const get = function get(params) {
