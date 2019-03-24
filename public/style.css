@@ -26,6 +26,15 @@ input {
   font-weight: 400;
 }
 
+text {
+  opacity: 0.8;
+}
+
+line, rect {
+  stroke-opacity: 0.5;
+  opacity: 0.5;
+}
+
 #header, #footer {
   width: 920px;
   margin: 0 auto;
@@ -34,6 +43,10 @@ input {
   background-color: #FFF;
   font-size: 18px;
   line-height: 36px;
+}
+
+#header {
+  font-weight: 700;
 }
 
 #footer {

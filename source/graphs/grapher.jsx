@@ -22,6 +22,7 @@ class Grapher {
     this.graphableWidth = this.width - (MARGINS.left + MARGINS.right)
     this.graphableHeight = this.height - (MARGINS.top + MARGINS.bottom)
     this.verticalAxisCount = 0
+    this.colorCount = 0
     this.logger = new Logger()
   }
 
@@ -48,7 +49,7 @@ class Grapher {
       .attr('transform', 'translate(' + MARGINS.left + ',' + (this.graphableHeight + MARGINS.top) + ')')
   }
 
-  drawVerticalAxis(scale, label) {
+  drawVerticalAxis(scale, label, color) {
     let verticalAxis
     let axisLeft
     let labelLeft
@@ -75,6 +76,7 @@ class Grapher {
       .append('text')
       .attr('text-anchor', 'middle')
       .attr('transform', 'translate(' + labelLeft + ',' + (this.height / 2) + ')rotate(-90)')
+      .attr('stroke', color)
       .text(label)
     this.verticalAxisCount += 1
   }
@@ -92,6 +94,8 @@ class Grapher {
       .range([0, this.graphableWidth])
       .domain(xDomain)
     const yScale = this.getYScale(data)
+    const color = this.getColor()
+
     this.graph.select(`#bars-${this.id}`)
       .selectAll('bar')
       .data(data)
@@ -109,11 +113,13 @@ class Grapher {
       .attr('height', (data) => {
         return this.graphableHeight - yScale(data.value)
       })
+      .attr('fill', color)
 
-    this.drawVerticalAxis(yScale, label)
+    this.drawVerticalAxis(yScale, label, color)
   }
 
   plotVerticals(data) {
+    const color = this.getColor()
     this.graph.select(`#lines-${this.id}`)
       .selectAll('line')
       .data(data)
@@ -131,7 +137,7 @@ class Grapher {
       })
       .attr('y2', this.graphableHeight)
       .attr('stroke-width', 1)
-      .attr('stroke', 'grey')
+      .attr('stroke', color)
       .attr('stroke-dasharray', '2')
 
     this.graph.select(`#labels-${this.id}`)
@@ -142,6 +148,7 @@ class Grapher {
       .attr('transform', (data) => {
         return `translate(${this.xScale(data.date.getTime())+6},10)rotate(90)`
       })
+      .attr('stroke', color)
       .text(function(data) {
         return data.value
       })
@@ -149,21 +156,22 @@ class Grapher {
 
   plotScatter(data, label) {
     const yScale = this.getYScale(data)
-
+    const color = this.getColor()
     this.graph.select(`#points-${this.id}`)
       .selectAll('circle')
       .data(data)
       .enter()
       .append('circle')
-      .attr('r', 3)
+      .attr('r', 2)
       .attr('cy', (data) => {
         return yScale(data.value)
       })
       .attr('cx', (data) => {
         return this.xScale(data.date.getTime())
       })
+      .attr('fill', color)
 
-    this.drawVerticalAxis(yScale, label)
+    this.drawVerticalAxis(yScale, label, color)
   }
 
   initXScale() {
@@ -188,6 +196,14 @@ class Grapher {
 
   getWholeDayTime(date) {
     return Math.floor(date.getTime() / DAY_MS) * DAY_MS
+  }
+
+  getColor() {
+    switch(this.colorCount++) {
+      case 0: return 'red'
+      case 1: return 'blue'
+      default: return '#333'
+    }
   }
 }
 
