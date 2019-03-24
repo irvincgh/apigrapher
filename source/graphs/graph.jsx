@@ -16,7 +16,7 @@ class Graph extends React.Component {
 
   render() {
     return (
-      <div id={`graph-wrapper-${this.props.graph.id}`}>
+      <div id={`graph-wrapper-${this.props.graph.id}`} class='graph'>
         <svg height={DEFAULT_HEIGHT} width={DEFAULT_WIDTH} id={`graph-${this.props.graph.id}`}>
           <svg>
             <g id={`points-${this.props.graph.id}`} transform={`translate(${MARGINS.left}, ${MARGINS.top})`}></g>

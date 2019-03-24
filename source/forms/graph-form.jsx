@@ -59,16 +59,16 @@ class GraphForm extends React.Component {
   render() {
     return (
       <form onSubmit={this.handleSubmit.bind(this)}>
-        <span>Source A: </span>
+        <span class="label">Source A:</span>
         <select id='data-source-a' ref={this.data0Ref} onChange={this.handleFormChange.bind(this)}>{this.getDataOptions(0, this.state.dataSelections)}</select>
-        <span>Source B: </span>
+        <span class="label">Source B:</span>
         <select id='data-source-b' ref={this.data1Ref} onChange={this.handleFormChange.bind(this)}>{this.getDataOptions(1, this.state.dataSelections)}</select>
-        <span>Start: </span>
+        <span class="label">Start:</span>
         <DatePicker fieldId='start-at' inputRef={this.startRef} value={this.state.start} handler={this.handleFormChange.bind(this)} />
-        <span>End: </span>
+        <span class="label">End:</span>
         <DatePicker fieldId='end-at' inputRef={this.endRef} value={this.state.end} handler={this.handleFormChange.bind(this)} />
 
-        <button>Go!</button>
+        <button>Go</button>
       </form>
     )
   }

@@ -1,8 +1,8 @@
 import * as d3 from 'd3'
 import Logger from '../logger.jsx'
 
-const DEFAULT_WIDTH = 800
-const DEFAULT_HEIGHT = 600
+const DEFAULT_WIDTH = 900
+const DEFAULT_HEIGHT = 675
 const LABEL_HEIGHT = 30
 const MARGINS = {
   left: 50,

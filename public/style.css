@@ -3,31 +3,33 @@ html, body {
   background-color: #EEE;
   font-family: 'Roboto Slab', serif;
   font-weight: 100;
-  font-size: 14px;
-  height: 120%;
-}
-
-input {
-  width: 120px;
-  font-weight: 400;
-}
-
-button {
-  font-family: 'Roboto', sans-serif;
+  font-size: 12px;
+  text-align: center;
+  height: 100%;
 }
 
 hr {
   border: none;
-  height: 0.5px;
+  height: 1px;
   width: 100%;
   color: #111; /* old IE */
   background-color: #111; /* Modern Browsers */
 }
 
+input, select {
+  text-align: left;
+  margin-right: 8px;
+}
+
+input {
+  width: 90px;
+  font-weight: 400;
+}
+
 #header, #footer {
   width: 920px;
   margin: 0 auto;
-  padding: 15px 20px 15px 20px;
+  padding: 15px 20px 20px 20px;
   text-align: center;
   background-color: #FFF;
   font-size: 18px;
@@ -48,6 +50,15 @@ hr {
 
 #content {
   width: 900px;
+  min-height: 100%;
   padding: 0px 30px 30px 30px;
   background-color: #FFF;
+}
+
+.label {
+  margin-right: 4px;
+}
+
+.graph {
+  margin-bottom: 35px;
 }
