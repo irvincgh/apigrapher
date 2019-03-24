@@ -98,10 +98,10 @@ class Grapher {
       .enter()
       .append('rect')
       .attr('x', (data) => {
-        return xScale(data.date.getTime()) - (xScale.bandwidth() / 2)
+        return xScale(data.date.getTime())
       })
       .attr('width', (data) => {
-        return data.date == this.start || data.date == this.end ? (xScale.bandwidth() / 2) : xScale.bandwidth()
+        return xScale.bandwidth()
       })
       .attr('y', (data) => {
         return yScale(data.value)

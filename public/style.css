@@ -1,31 +1,53 @@
-circle {
-  fill: black;
-  /*  transitions to make growing and changing color look nice */
-  transition: r 0.5s linear, fill 0.5s linear;
+html, body {
+  color: #111;
+  background-color: #EEE;
+  font-family: 'Roboto Slab', serif;
+  font-weight: 100;
+  font-size: 14px;
+  height: 120%;
 }
-#container {
-  overflow: visible; /* make sure axes are visible  */
-  margin-bottom: 50px; /* space below graph so table doesn't overlap */
+
+input {
+  width: 120px;
+  font-weight: 400;
 }
-body {
-  /* move graph away from edge of screen */
-  margin: 20px 40px;
+
+button {
+  font-family: 'Roboto', sans-serif;
 }
-table, th, td {
-  /* make table cell borders visible  */
-  border: 1px solid black;
+
+hr {
+  border: none;
+  height: 0.5px;
+  width: 100%;
+  color: #111; /* old IE */
+  background-color: #111; /* Modern Browsers */
 }
-th, td {
-  /*  make table cels look better */
-  padding:10px;
+
+#header, #footer {
+  width: 920px;
+  margin: 0 auto;
+  padding: 15px 20px 15px 20px;
   text-align: center;
+  background-color: #FFF;
+  font-size: 18px;
+  line-height: 36px;
 }
-/* hover state for circles */
-circle:hover {
-  r: 10;
-  fill: blue;
+
+#footer {
+  font-size: 14px;
+  line-height: 28px;
 }
-/*  styles for circles when you click on them */
-circle:active {
-  fill: red;
+
+#content-wrapper {
+  width: 960px;
+  margin: 0 auto;
+  background-color: #FFF;
+  height: 100%;
+}
+
+#content {
+  width: 900px;
+  padding: 0px 30px 30px 30px;
+  background-color: #FFF;
 }
