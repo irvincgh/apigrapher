@@ -16,7 +16,7 @@ class Graph extends React.Component {
 
   render() {
     return (
-      <div id={`graph-wrapper-${this.props.graph.id}`} class='graph'>
+      <div id={`graph-wrapper-${this.props.graph.id}`} className='graph'>
         <svg height={DEFAULT_HEIGHT} width={DEFAULT_WIDTH} id={`graph-${this.props.graph.id}`}>
           <svg>
             <g id={`points-${this.props.graph.id}`} transform={`translate(${MARGINS.left}, ${MARGINS.top})`}></g>
@@ -156,17 +156,31 @@ class Graph extends React.Component {
   }
 
   async generateGraph() {
+    let errors = []
     const grapher = new Grapher(this.props.graph)
-    try {
-      grapher.initGraph()
-      const plotA = this.plot(grapher, this.props.graph.dataSelections[0])
-      const plotB = this.plot(grapher, this.props.graph.dataSelections[1])
-      await plotA
-      await plotB
-      this.hideLoadingScreen()
-    } catch(error) {
+    grapher.initGraph()
+    if (this.props.graph.error) {
+      errors.push(this.props.graph.error)
+    } else {
+      try {
+        const plotA = this.plot(grapher, this.props.graph.dataSelections[0])
+        await plotA
+      } catch(error) {
+        errors.push(error)
+      }
+      try {
+        const plotB = this.plot(grapher, this.props.graph.dataSelections[1])
+        await plotB
+      } catch(error) {
+        errors.push(error)
+      }
+    }
+    if (errors.length > 0) {
+      const uniqErrors = Array.from(new Set(errors))
       const loadingText = document.getElementById(`graph-loading-text-${this.props.graph.id}`)
-      loadingText.textContent = `Error: ${error}`
+      loadingText.textContent = `Error: ${uniqErrors.join('; ')}`
+    } else {
+      this.hideLoadingScreen()
     }
   }
 }

@@ -57,7 +57,7 @@ describe('Holidays API', function() {
         expect(resultBody.length).to.equal(4)
       })
       it('returns with holidays in expected format', function() {
-        expect(resultBody[0].date).to.equal(mockHolidays["2018"][0].date)
+        expect(resultBody[0].date).to.equal(moment(mockHolidays["2018"][0].date).format(settings.config.dateFormat))
         expect(resultBody[0].value).to.equal(mockHolidays["2018"][0].name)
       })
 
@@ -82,7 +82,7 @@ describe('Holidays API', function() {
           expect(resultBody.length).to.equal(11)
         })
         it('returns with holidays in expected format', function() {
-          expect(resultBody[10].date).to.equal(mockHolidays["2019"][0].date)
+          expect(resultBody[10].date).to.equal(moment(mockHolidays["2019"][0].date).format(settings.config.dateFormat))
           expect(resultBody[10].value).to.equal(mockHolidays["2019"][0].name)
         })
       })

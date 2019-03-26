@@ -31,8 +31,8 @@ text {
 }
 
 line, rect {
-  stroke-opacity: 0.5;
-  opacity: 0.5;
+  stroke-opacity: 0.4;
+  opacity: 0.4;
 }
 
 #header, #footer {

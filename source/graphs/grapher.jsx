@@ -104,7 +104,7 @@ class Grapher {
       .attr('x', (data) => {
         return xScale(data.date.getTime())
       })
-      .attr('width', (data) => {
+      .attr('width', () => {
         return xScale.bandwidth()
       })
       .attr('y', (data) => {

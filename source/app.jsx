@@ -1,9 +1,9 @@
 import './styles/base.scss'
 
+import GraphForm from './forms/graph-form.jsx'
+import GraphList from './graphs/graph-list.jsx'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import GraphList from './graphs/graph-list.jsx'
-import GraphForm from './forms/graph-form.jsx'
 
 class App extends React.Component {
   constructor(props) {
@@ -28,6 +28,8 @@ class App extends React.Component {
       start: start,
       end: end
     }
+
+    if (dataSelections.length !== 2) { newGraph.error = 'Please select two different data sources to graph.' }
     graphs.push(newGraph)
     this.setState({graphs: graphs, currentGraphId: newGraph.id + 1})
   }
