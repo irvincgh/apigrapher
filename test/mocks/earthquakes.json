@@ -1,0 +1,61 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "generated": 1547530865000,
+    "url": "FAKE URL",
+    "title": "FAKE TITLE",
+    "status": 200,
+    "api": "1.7.0",
+    "count": 1
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "mag": 1.81,
+        "place": "FAKE PLACE",
+        "time": 1547411813630,
+        "updated": 1547433429726,
+        "tz": -480,
+        "url": "FAKE URL",
+        "detail": "FAKE URL",
+        "felt": 8,
+        "cdi": 2.3,
+        "mmi": null,
+        "alert": null,
+        "status": "automatic",
+        "tsunami": 0,
+        "sig": 52,
+        "net": "ci",
+        "code": "38424032",
+        "ids": ",ci38424032,",
+        "sources": ",ci,",
+        "types": ",dyfi,focal-mechanism,geoserve,nearby-cities,origin,phase-data,",
+        "nst": 36,
+        "dmin": 0.02812,
+        "rms": 0.35,
+        "gap": 111,
+        "magType": "ml",
+        "type": "earthquake",
+        "title": "FAKE TITLE"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -118.48,
+          34.0245,
+          4.94
+        ]
+      },
+      "id": "ci38424032"
+    }
+  ],
+  "bbox": [
+    -118.701,
+    33.7166667,
+    -0.54,
+    -117.1656667,
+    34.4718333,
+    17.5
+  ]
+}
