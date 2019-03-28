@@ -114,6 +114,7 @@ class Grapher {
         return this.graphableHeight - yScale(data.value)
       })
       .attr('fill', color)
+      .attr('stroke', color)
 
     this.drawVerticalAxis(yScale, label, color)
   }
