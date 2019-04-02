@@ -1,9 +1,11 @@
 # API Grapher
-**API Grapher** is a data visualization web app built for comparative data exploration of API vs. API. It is designed provide as multiple data sources from a variety of domains, and to give the user freedom to hunt for trends and correlations in the data.
+**API Grapher** is a data visualization web app built for comparative data exploration of API vs. API. 
+
+It is designed to integrate with a wide variety of data APIs from disparate domains, and to provide users with the freedom to hunt for trends and correlations in the data.
 
 Do earthquakes correlate with holidays? Do rocket launches correlate with rises in the stock index? Or is everything just totally random?
 
-**API Grapher** is here for you to start exploring.
+**API Grapher** is here to start exploring.
 
 ## Features
 * Pick from the included set of APIs or expand your own (with some configuration and minimal coding).
