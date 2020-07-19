@@ -126,8 +126,9 @@ class Graph extends React.Component {
 
   async plot(grapher, key) {
     const dataSettings = settings.external[key]
+    if (!dataSettings) { return }
     let data
-    const label = settings.external[key].name
+    const label = dataSettings.name
     switch (key) {
       case 'bikeCrimes':
         data = await this.getBikeCrimes(this.props.graph)

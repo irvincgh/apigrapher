@@ -5,7 +5,7 @@ import moment from 'moment'
 import settings from '../../settings.json'
 
 const DEFAULT_SPREAD = 31
-const DATE_FORMAT = 'YYYY-MM-DD'
+const DATE_FORMAT = 'YYYY/MM/DD'
 
 class GraphForm extends React.Component {
   static get propTypes() {
@@ -41,8 +41,8 @@ class GraphForm extends React.Component {
   }
 
   handleSubmit(event) {
-    const isoStart = new Date(`${this.state.start}T00:00:00`).toISOString()
-    const isoEnd = new Date(`${this.state.end}T23:59:59`).toISOString()
+    const isoStart = new Date(`${this.state.start} 00:00:00`).toISOString()
+    const isoEnd = new Date(`${this.state.end} 23:59:59`).toISOString()
     this.props.handleSubmit(this.state.dataSelections, isoStart, isoEnd)
     event.preventDefault()
   }
@@ -50,8 +50,8 @@ class GraphForm extends React.Component {
   handleFormChange() {
     const newState = {
       dataSelections: [this.data0Ref.current.value, this.data1Ref.current.value],
-      start: this.startRef.current.value,
-      end: this.endRef.current.value
+      start: moment(this.startRef.current.value).format(DATE_FORMAT),
+      end: moment(this.endRef.current.value).format(DATE_FORMAT)
     }
     this.setState(newState)
   }
